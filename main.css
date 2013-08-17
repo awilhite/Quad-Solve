@@ -1,0 +1,136 @@
+* {
+  padding:0px;
+  margin: 0px;
+}
+
+html, body {
+	background: -webkit-radial-gradient(60px 45px, circle farthest-corner, #666, #333);
+	height: 100%;
+}
+
+a, a:visited {
+	text-decoration: none;
+	border: none;
+	color: inherit;
+	transition: color 0.25s;
+}
+
+a:hover {
+	color: rgba(0, 0, 0, 0.8);
+	cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type=text] {
+	font-size: 25px;
+    width: 85px;
+	padding: 5px;
+	margin-left: 10px;
+    border: none;
+	background: transparent;
+}
+
+#main {
+	overflow: auto;
+	padding-bottom: 50px;
+}
+
+#wrap {
+	width: 800px;
+	margin: 0 auto;
+	min-height: 100%;
+}
+
+#wrap #solution {
+	width: 300px;
+	border-radius: 5px;
+	border: 10px solid rgba(0, 0, 0, .4);
+	background: rgba(255, 255, 255, .2);
+	margin-right: 20px;
+	float:right;
+	display:none;
+	text-align: center;
+	margin-top: 20px;
+	padding-bottom: 10px;
+}
+
+#wrap #solution > span {
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+
+#wrap #solution > h3 {
+	font-size: 1.2em;
+	padding: 10px;
+	margin-bottom: 5px;
+	background: rgba(255, 255, 255, .1);
+}
+
+#wrap form {
+	float: left;
+	margin-top : 20px;
+	background-color: rgba(255, 255, 255, .1);
+	padding: 40px;
+	padding-top: 50px;
+	border-radius: 5px;
+	border: 10px solid rgba(0, 0, 0, .2);
+	margin-left: 20px;
+}
+
+#wrap form > div {
+	line-height: 40px;
+	background: rgba(255, 255, 255, .4);
+	padding-left: 10px;
+	border-radius: 10px 0px 0px 10px;
+	margin-bottom: 10px;
+}
+
+#wrap form > div > span {
+	width: 12px;
+	padding-right: 5px;
+	border-right: 1px solid rgba(0, 0, 0, .2);
+}
+
+#wrap #help {
+	width: 370px;
+	float: right;
+	border-radius: 5px;
+	padding: 20px;
+	background-color: rgba(255, 255, 255, .3);
+	border: 10px solid rgba(0, 0, 0, .3);
+	margin-top: 20px;
+	font-size: 1.2em;
+	line-height: 200%;
+	margin-right: 20px;
+}
+
+.highlight {
+	color: rgba(0, 0, 0, 1);
+	font-weight: 900;
+	font-size: 1.25em;
+}
+
+#wrap #solution .code {
+	background: rgba(255, 255, 255, .1);
+	border: 2px solid rgba(0, 0, 0, .1);
+	padding: 9px;
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	font-family: "Courier New", monospace;
+}
+
+body footer {
+	line-height: 20px;
+	height: 50px;
+	text-align: left;
+	font-size: 20px;
+	font-family: Arial, sans-serif;
+	clear: both;
+	margin-top: -50px;
+	margin-left: 30px;
+	color: rgba(0, 0, 0, .5);
+	letter-spacing: 0.2em;
+
