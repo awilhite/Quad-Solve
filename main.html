@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<script type="text/javascript">
+
+window.onload = function() {
+
+	window.solutionsBox = {
+		el: document.getElementById("solution"),
+		visible: false,
+		toggle: function() {
+			if (!this.visible) {
+				this.el.style.display = "block";
+				document.getElementById("help").style.display = "none";
+				this.visible = true;
+			}
+		},
+		set html(x) {
+			var str = "<h3>"+x.header+"</h3>";
+			x.solutions.forEach(function(item){
+				str = str + "<span>"+item+"</span><br>";
+			});
+			this.el.innerHTML = str + "<h3>Discriminant</h3><span>"+x.discriminant+"</span><h3>Exact</h3><span>"+x.exact+"</span><h3>"+x.maxormin.text+"</h3><span> ("+x.maxormin.x+" ,"+x.maxormin.y+" ) </span>";
+		}
+
+	};
+};
+
+function round(n) {
+	return Math.round(n*10000)/10000;
+}
+
+function solve() {
+
+	var a = parseFloat(document.form.a.value);
+	var b = parseFloat(document.form.b.value);
+	var c = parseFloat(document.form.c.value);
+	
+	if ( isNaN(a) || isNaN(b) ||isNaN(c) ) {
+		return;
+	}
+	
+	console.log(b)
+	
+	var maxormin = {
+		x: -1*b/2*a,
+		y: a * (-1*b/2*a * -1*b/2*a) + b * (-1*b/2*a) + c,
+		text: a < 0 ? "Maximum" : "Minimum"
+	};
+	
+	var positive, negative, real, imaginary;
+	
+	var discriminant = b*b - 4*a*c;
+	var exact = "<span style='text-decoration: underline'>" + "( " + (-1 * b).toString() + " ± sqrt( " + discriminant.toString() + " ) )" + "</span>" + "<br><span>" + (2 * a).toString() + "</span>";
+	var sq = Math.sqrt( Math.abs( discriminant ) );
+
+	solutionsBox.toggle();
+	
+	if (discriminant > 0) {
+		negative = round( (-1*b - sq) / (2*a) );
+		positive = round( (-1*b + sq) / (2*a) );
+
+		solutionsBox.html = { header: "Two Real Solutions", solutions: [positive, negative], discriminant: discriminant, exact: exact, maxormin: maxormin  }; 
+	}
+
+	if (discriminant == 0) {
+		posititve = round( (-1*b + sq) / (2*a) );
+	
+		solutionsBox.html = { header: "One Real Solution", solutions: [positive], discriminant: discriminant, exact: exact, maxormin: maxormin  };
+	}
+
+	if (discriminant < 0) {
+		real = round( (-1*b) / (2*a) );
+		imaginary = round( sq / (2*a) )+"i";
+	
+		solutionsBox.html = { header: "Two Complex Roots", solutions: [real+" + "+imaginary, real+" - "+imaginary], discriminant: discriminant, exact: exact, maxormin: maxormin };
+	}
+}
+
+
+</script>
+
+<style>
+* {
+  padding:0px;
+  margin: 0px;
+}
+
+html, body {
+	background: -webkit-radial-gradient(60px 45px, circle farthest-corner, #666, #333);
+	height: 100%;
+}
+
+a, a:visited {
+	text-decoration: none;
+	border: none;
+	color: inherit;
+	transition: color 0.25s;
+}
+
+a:hover {
+	color: rgba(0, 0, 0, 0.8);
+	cursor: pointer;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type=text] {
+	font-size: 25px;
+    width: 85px;
+	padding: 5px;
+	margin-left: 10px;
+    border: none;
+	background: transparent;
+}
+
+#main {
+	overflow: auto;
+	padding-bottom: 50px;
+}
+
+#wrap {
+	width: 800px;
+	margin: 0 auto;
+	min-height: 100%;
+}
+
+#wrap #solution {
+	width: 300px;
+	border-radius: 5px;
+	border: 10px solid rgba(0, 0, 0, .4);
+	background: rgba(255, 255, 255, .2);
+	margin-right: 20px;
+	float:right;
+	display:none;
+	text-align: center;
+	margin-top: 20px;
+	padding-bottom: 10px;
+}
+
+#wrap #solution > span {
+	font-size: 1.5em;
+	margin-bottom: 10px;
+}
+
+#wrap #solution > h3 {
+	font-size: 1.2em;
+	padding: 10px;
+	margin-bottom: 5px;
+	background: rgba(255, 255, 255, .1);
+}
+
+#wrap form {
+	float: left;
+	margin-top : 20px;
+	background-color: rgba(255, 255, 255, .1);
+	padding: 40px;
+	padding-top: 50px;
+	border-radius: 5px;
+	border: 10px solid rgba(0, 0, 0, .2);
+	margin-left: 20px;
+}
+
+#wrap form > div {
+	line-height: 40px;
+	background: rgba(255, 255, 255, .4);
+	padding-left: 10px;
+	border-radius: 10px 0px 0px 10px;
+	margin-bottom: 10px;
+}
+
+#wrap form > div > span {
+	width: 12px;
+	padding-right: 5px;
+	border-right: 1px solid rgba(0, 0, 0, .2);
+}
+
+#wrap #help {
+	width: 370px;
+	float: right;
+	border-radius: 5px;
+	padding: 20px;
+	background-color: rgba(255, 255, 255, .3);
+	border: 10px solid rgba(0, 0, 0, .3);
+	margin-top: 20px;
+	font-size: 1.2em;
+	line-height: 200%;
+	margin-right: 20px;
+}
+
+.highlight {
+	color: rgba(0, 0, 0, 1);
+	font-weight: 900;
+	font-size: 1.25em;
+}
+
+#wrap #solution .code {
+	background: rgba(255, 255, 255, .1);
+	border: 2px solid rgba(0, 0, 0, .1);
+	padding: 9px;
+	border-radius: 3px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	font-family: "Courier New", monospace;
+}
+
+body footer {
+	line-height: 20px;
+	height: 50px;
+	text-align: left;
+	font-size: 20px;
+	font-family: Arial, sans-serif;
+	clear: both;
+	margin-top: -50px;
+	margin-left: 30px;
+	color: rgba(0, 0, 0, .5);
+	letter-spacing: 0.2em;
+
+</style>
+</head>
+
+	<body>
+
+		<div id="wrap">
+		<div id="main">
+			<form name="form">
+				<div>
+					<span>A</span>
+					<input onchange="solve()" onkeyup="solve()" name="a" type="text">
+				</div>
+				<div>
+					<span>B</span>
+					<input onchange="solve()" onkeyup="solve()" name="b" type="text">
+				</div>
+				<div>
+					<span>C</span>
+					<input onchange="solve()" onkeyup="solve()" name="c" type="text">
+				</div>
+			</form>
+
+
+			<div id="help">
+				Let's say your equation is <span class="code">x<sup>2</sup> + 2x = -1</span> 
+				<br>
+				It needs to look like <span class="code"><span class="highlight">a</span>x<sup>2</sup> + <span class="highlight">b</span>x + <span class="highlight">c</span> = 0</span><br>
+				Add 1 to both sides so that it is equal to 0  <br>
+				You get <span class="code"><span class="highlight">1</span>x<sup>2</sup> + <span class="highlight">2</span>x + <span class="highlight">1</span> = 0</span>  <br>
+				Plug A, B, and C into the box to the left
+			</div>
+
+
+			<div id="solution"></div>
+		</div>
+		</div>
+		
+		<footer>Created by <a href="http://austinwilhite.blogspot.com">Austin Wilhite</a></footer>
+
+	</body>
+</html>
+
