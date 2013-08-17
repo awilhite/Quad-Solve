@@ -1,5 +1,18 @@
 
-window.onload = function() {
+var app = {};
+
+app.init = function() {
+	
+	app.a = document.getElementById("a");
+	app.b = document.getElementById("b");
+	app.c = document.getElementById("c");
+
+	app.a.addEventListener("change", app.solve, false);
+	app.a.addEventListener("keyup", app.solve, false);
+	app.b.addEventListener("change", app.solve, false);
+	app.b.addEventListener("keyup", app.solve, false);
+	app.c.addEventListener("change", app.solve, false);
+	app.c.addEventListener("keyup", app.solve, false);
 
 	window.solutionsBox = {
 		el: document.getElementById("solution"),
@@ -20,23 +33,24 @@ window.onload = function() {
 		}
 
 	};
+
 };
 
-function round(n) {
+app.round = function(n) {
 	return Math.round(n*10000)/10000;
 }
 
-function solve() {
+app.solve = function() {
+	console.log("HI");
 
-	var a = parseFloat(document.form.a.value);
-	var b = parseFloat(document.form.b.value);
-	var c = parseFloat(document.form.c.value);
+
+	var a = parseFloat(app.a.value);
+	var b = parseFloat(app.b.value);
+	var c = parseFloat(app.c.value);
 	
 	if ( isNaN(a) || isNaN(b) ||isNaN(c) ) {
 		return;
 	}
-	
-	console.log(b)
 	
 	var maxormin = {
 		x: -1*b/2*a,
@@ -47,14 +61,14 @@ function solve() {
 	var positive, negative, real, imaginary;
 	
 	var discriminant = b*b - 4*a*c;
-	var exact = "<span style='text-decoration: underline'>" + "( " + (-1 * b).toString() + " ± sqrt( " + discriminant.toString() + " ) )" + "</span>" + "<br><span>" + (2 * a).toString() + "</span>";
+	var exact = "<span style='text-decoration: underline'>" + "( " + (-1 * b).toString() + " &plusmn; sqrt( " + discriminant.toString() + " ) )" + "</span>" + "<br><span>" + (2 * a).toString() + "</span>";
 	var sq = Math.sqrt( Math.abs( discriminant ) );
 
 	solutionsBox.toggle();
 	
 	if (discriminant > 0) {
-		negative = round( (-1*b - sq) / (2*a) );
-		positive = round( (-1*b + sq) / (2*a) );
+		negative = app.round( (-1*b - sq) / (2*a) );
+		positive = app.round( (-1*b + sq) / (2*a) );
 
 		solutionsBox.html = { header: "Two Real Solutions", solutions: [positive, negative], discriminant: discriminant, exact: exact, maxormin: maxormin  }; 
 	}
@@ -66,10 +80,16 @@ function solve() {
 	}
 
 	if (discriminant < 0) {
-		real = round( (-1*b) / (2*a) );
-		imaginary = round( sq / (2*a) )+"i";
+		real = app.round( (-1*b) / (2*a) );
+		imaginary = app.round( sq / (2*a) )+"i";
 	
 		solutionsBox.html = { header: "Two Complex Roots", solutions: [real+" + "+imaginary, real+" - "+imaginary], discriminant: discriminant, exact: exact, maxormin: maxormin };
 	}
 }
+
+
+window.addEventListener("load", function load(event){
+    window.removeEventListener("load", load, false);
+    app.init();  
+}, false);
 
